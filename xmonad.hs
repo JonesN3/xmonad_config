@@ -40,6 +40,10 @@ import Data.Ratio ((%))
  
 import qualified XMonad.StackSet as W
 import qualified Data.Map as M
+
+import XMonad.Hooks.DynamicLog
+import XMonad.Hooks.ManageDocks
+import Data.List
  
 --}}}
  
@@ -52,7 +56,13 @@ modMask' :: KeyMask
 modMask' = mod1Mask
 
 -- myWorkspaces    = ["1: main","2:conf","3:web","4:xterm","5:music", "6:xterm", "7", "8", "9"]
-myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+-- myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
+myWorkspaces :: [String]
+myWorkspaces = clickable . (map dzenEscape) $ ["1","2","3","4","5"]
+
+    where clickable l = [ "^ca(1,xdotool key alt+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
+            (i,ws) <- zip [1..] l,
+            let n = i ]
 
 {- Dzen/Conky status bar -}
 
@@ -62,12 +72,13 @@ myBarFg = "#384E53"
 
 {- Local installations, change you your install location -}
 dzenLoc = "~/usr/local/bin/dzen2"
-conkyLoc = "~/snacks/bin/conky"
+conkyLoc = "/snacks/bin/conky"
 conkyConfig = "~/.xmonad/.conky_dzen"
 
 {- commands to create the bars -}
 myXmonadBar = dzenLoc ++ " -x '0' -y '0' -h '18' -w '1420' -ta 'l' -fg '" ++ myBarBg ++ "' -bg '" ++ myBarBg ++ "'"
-myStatusBar = conkyLoc ++ " -c " ++ conkyConfig ++ " | " ++ dzenLoc ++ " -x '1420' -w '500' -h '18' -ta 'r' -bg'" ++ myBarBg ++ "' -fg '" ++ myBarFg ++ "' -y '0'"
+myStatusBar = ""++ conkyLoc ++ " -c " ++ conkyConfig ++ " | " ++ dzenLoc ++ " -x '1420' -w '500' -h '18' -ta 'r' -bg '" ++ myBarBg ++ "' -fg '" ++ myBarFg ++ "' -y '0'"
+--myStatusBar = "/snacks/bin/conky -c ~/.xmonad/.conky_dzen | ~/usr/local/bin/dzen2 -x '1420' -w '500' -h '18' -ta 'r' -bg '#1B1D1E' -fg '#FFFFFF' -y '0'"
 
 myBitmapsDir = "/uio/hume/student-u56/espenaj/.xmonad/dzen2"
 
