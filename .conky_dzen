@@ -1,0 +1,12 @@
+background no
+out_to_console yes
+out_to_x no
+update_interval 0.1
+total_run_times 0
+use_spacer none
+
+own_window_class conky
+
+
+TEXT
+^ca(1,~/.xmonad/conky/sysinfo_popup.sh) Sysinfo^ca() ^fg(\#c0c0c0)[${loadavg 1 2 3}] ^ca(1,~/.xmonad/conky/calendar.sh)${time [%A %d.%m.%y] [%H:%M}]^ca()

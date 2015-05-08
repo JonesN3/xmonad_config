@@ -59,10 +59,9 @@ modMask' = mod1Mask
 -- myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 myWorkspaces :: [String]
 myWorkspaces = clickable . (map dzenEscape) $ ["1","2","3","4","5"]
-
-    where clickable l = [ "^ca(1,xdotool key alt+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
-            (i,ws) <- zip [1..] l,
-            let n = i ]
+    where clickable l = [ "^ca(1,~/usr/local/bin/xdotool key alt+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
+           (i,ws) <- zip [1..] l,
+           let n = i ]
 
 {- Dzen/Conky status bar -}
 
@@ -178,6 +177,9 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((0,                          0x1008ff14  ), spawn "rhythmbox-client --play-pause")
     , ((0,                          0x1008ff17  ), spawn "rhythmbox-client --next")
     , ((0,                          0x1008ff16  ), spawn "rhythmbox-client --previous")
+
+    , ((modMask,                    xK_w        ), spawn "~/usr/local/bin/xdotool key Up")
+    , ((modMask,                    xK_s        ), spawn "xdotool key Down")
  
     -- layouts
     , ((modMask,                    xK_space    ), sendMessage NextLayout)
@@ -218,15 +220,6 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     [((m .|. modMask, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9]
         , (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]]
-    ++
- 
-    --
-    -- mod-{w,e,r}, Switch to physical/Xinerama screens 1, 2, or 3
-    -- mod-shift-{w,e,r}, Move client to screen 1, 2, or 3
-    --
-    [((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
-        | (key, sc) <- zip [xK_w, xK_e, xK_r] [0..]
-        , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]]
- 
+
 --}}}
 -- vim:foldmethod=marker sw=4 sts=4 ts=4 tw=0 et ai nowrap
