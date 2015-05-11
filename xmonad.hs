@@ -58,8 +58,8 @@ modMask' = mod1Mask
 -- myWorkspaces    = ["1: main","2:conf","3:web","4:xterm","5:music", "6:xterm", "7", "8", "9"]
 -- myWorkspaces = ["1", "2", "3", "4", "5", "6", "7", "8", "9"]
 myWorkspaces :: [String]
-myWorkspaces = clickable . (map dzenEscape) $ ["1","2","3","4","5"]
-    where clickable l = [ "^ca(1,~/usr/local/bin/xdotool key alt+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
+myWorkspaces = clickable . (map dzenEscape) $ ["main","vim","web","pdf","music", "web", "ssh", "float", "video"]
+    where clickable l = [ "^ca(1,xdotool key alt+" ++ show (n) ++ ")" ++ ws ++ "^ca()" |
            (i,ws) <- zip [1..] l,
            let n = i ]
 
@@ -68,15 +68,17 @@ myWorkspaces = clickable . (map dzenEscape) $ ["1","2","3","4","5"]
 {- global definitions for status bar background and foreground -}
 myBarBg = "#6A7F8D"
 myBarFg = "#384E53"
+--myFont = "-*-lucida-medium-r-normal-*-12-*-*-*-c-*-*-*"
+myFont          = "-artwiz-snap-medium-*-normal-*-11-*-*-*-*-*-*-*"
 
 {- Local installations, change you your install location -}
-dzenLoc = "~/usr/local/bin/dzen2"
-conkyLoc = "/snacks/bin/conky"
+dzenLoc = "/usr/bin/dzen2" --"~/usr/local/bin/dzen2"
+conkyLoc = "/usr/bin/conky" --"/snacks/bin/conky"
 conkyConfig = "~/.xmonad/.conky_dzen"
 
 {- commands to create the bars -}
-myXmonadBar = dzenLoc ++ " -x '0' -y '0' -h '18' -w '1420' -ta 'l' -fg '" ++ myBarBg ++ "' -bg '" ++ myBarBg ++ "'"
-myStatusBar = ""++ conkyLoc ++ " -c " ++ conkyConfig ++ " | " ++ dzenLoc ++ " -x '1420' -w '500' -h '18' -ta 'r' -bg '" ++ myBarBg ++ "' -fg '" ++ myBarFg ++ "' -y '0'"
+myXmonadBar = dzenLoc ++ " -x '0' -y '0' -h '16' -w '1420' -ta 'l' -fg '" ++ myBarBg ++ "' -bg '" ++ myBarBg ++ "'" ++ " -fn '" ++ myFont ++ "'"
+myStatusBar = ""++ conkyLoc ++ " -c " ++ conkyConfig ++ " | " ++ dzenLoc ++ " -x '1420' -w '500' -h '16' -ta 'r' -bg '" ++ myBarBg ++ "' -fg '" ++ myBarFg ++ "' -y '0'" ++ " -fn '" ++ myFont ++ "'"
 --myStatusBar = "/snacks/bin/conky -c ~/.xmonad/.conky_dzen | ~/usr/local/bin/dzen2 -x '1420' -w '500' -h '18' -ta 'r' -bg '#1B1D1E' -fg '#FFFFFF' -y '0'"
 
 myBitmapsDir = "/uio/hume/student-u56/espenaj/.xmonad/dzen2"
@@ -125,7 +127,7 @@ manageHook' = (composeAll . concat $
  - I like to have one workspace floating, just remove first line if you don't -}
 layoutHook'  =  
                 onWorkspace "4" simpleFloat $  
-                gaps [(U,19), (R,1), (L,1), (D,1)] $ Tall 1 (3/100) (1/2) ||| Full  
+                gaps [(U,17), (R,1), (L,1), (D,1)] $ Tall 1 (3/100) (1/2) ||| Full  
  
 {- Bar
  - take 1 to print only first char of layout, take 0 to print none -}
@@ -145,16 +147,16 @@ myLogHook h = dynamicLogWithPP $ defaultPP
  
 --}}}
 
+
 -- Theme {{{
 colorNormalBorder   = "#082B42"
 colorFocusedBorder  = "#146CA6"
  
 {- not sure what these does -} 
-barFont  = "Caladea"
-barXFont = "inconsolata:size=12"
-xftFont = "xft: inconsolata-14"
---}}}
- 
+barFont  = "Caladea:size=18"
+barXFont = "inconsolata:size=18"
+xftFont = "xft: inconsolata-18"
+
 -- }}}
 -- Key mapping {{{
 {- modMask = alt, cant be changed in top of config -}
@@ -183,6 +185,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
  
     -- layouts
     , ((modMask,                    xK_space    ), sendMessage NextLayout)
+    , ((modMask,                    xK_f    ), sendMessage NextLayout)
     , ((modMask .|. shiftMask,      xK_space    ), setLayout $ XMonad.layoutHook conf) -- reset layout on current desktop to default
     , ((modMask,                    xK_b        ), sendMessage ToggleStruts)
     , ((modMask,                    xK_n        ), refresh)

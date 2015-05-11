@@ -4,9 +4,14 @@ out_to_x no
 update_interval 0.1
 total_run_times 0
 use_spacer none
+#FONT='-*-lucida-*-r-normal-*-*-120-*-*-*-*-iso8859-*'
+#FONT='-artwiz-nu-medium-*-normal-*-12-*-*-*-*-*-*-*'
 
 own_window_class conky
 
 
 TEXT
-^ca(1,~/.xmonad/conky/sysinfo_popup.sh) Sysinfo^ca() ^fg(\#c0c0c0)[${loadavg 1 2 3}] ^ca(1,~/.xmonad/conky/calendar.sh)${time [%A %d.%m.%y] [%H:%M}]^ca()
+^ca(1,~/.xmonad/conky/sysinfo_popup.sh) Sysinfo ^ca() \
+^fg ^i(/home/jones/.xmonad/xbm8x8/cpu.xbm) ${execi 60 /home/jones/.xmonad/conky/cpu_bar.sh} \
+^fg ^i(/home/jones/.xmonad/xbm8x8/mem.xbm) ${execi 60 /home/jones/.xmonad/conky/mem_bar.sh} \
+^ca(1,~/.xmonad/conky/calendar.sh) ${time %A %d.%m.%y ^i(/home/jones/.xmonad/xbm8x8/clock.xbm) %H:%M}^ca() \
