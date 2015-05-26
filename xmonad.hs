@@ -7,6 +7,8 @@ import XMonad.Prompt.RunOrRaise (runOrRaisePrompt)
 import XMonad.Prompt.AppendFile (appendFilePrompt)
 -- Hooks
 import XMonad.Operations
+
+import XMonad.Actions.CopyWindow
  
 import System.IO
 import System.Exit
@@ -72,8 +74,8 @@ myBarFg = "#384E53"
 myFont          = "-artwiz-snap-medium-*-normal-*-11-*-*-*-*-*-*-*"
 
 {- Local installations, change you your install location -}
-dzenLoc = "/usr/bin/dzen2" --"~/usr/local/bin/dzen2"
-conkyLoc = "/usr/bin/conky" --"/snacks/bin/conky"
+dzenLoc = "~/usr/local/bin/dzen2"
+conkyLoc = "/snacks/bin/conky"
 conkyConfig = "~/.xmonad/.conky_dzen"
 
 {- commands to create the bars -}
@@ -168,7 +170,7 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
 
     -- Programs
     , ((0,                          xK_Print    ), spawn "scrot -e 'mv $f ~/screenshots/'")
-    , ((modMask,		            xK_o        ), spawn "chromium-browser")
+    , ((modMask,                    xK_o        ), spawn "chromium-browser")
     , ((modMask,                    xK_m        ), spawn "nautilus --no-desktop --browser")
     , ((modMask,                    xK_d        ), spawn "dmenu_run")
 
@@ -206,6 +208,9 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask .|. controlMask, xK_t), sendMessage $ ToggleGap U) -- toggle the top gap
     , ((modMask .|. controlMask, xK_w), sendMessage $ IncGap 1 U)  -- increment the top gap
     , ((modMask .|. controlMask, xK_q), sendMessage $ DecGap 1 U)  -- decrement the top gap
+
+    , ((modMask, xK_v ), windows copyToAll) -- @@ Make focused window always visible
+    , ((modMask .|. shiftMask, xK_c     ), kill1) -- @@ Close the focused window
  
     -- workspaces
     , ((modMask .|. controlMask,   xK_Right     ), nextWS)

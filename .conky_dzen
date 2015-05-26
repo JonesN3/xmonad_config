@@ -6,6 +6,7 @@ total_run_times 0
 use_spacer none
 #FONT='-*-lucida-*-r-normal-*-*-120-*-*-*-*-iso8859-*'
 #FONT='-artwiz-nu-medium-*-normal-*-12-*-*-*-*-*-*-*'
+#FONT='-artwiz-snap-medium-*-normal-*-11-*-*-*-*-*-*-*'
 test='amixer -c 0 get Master | grep Mono: | cut -d "[" -f2 | cut -d "]" -f1'
 
 
@@ -14,7 +15,7 @@ own_window_class conky
 
 TEXT
 ^ca(1,~/.xmonad/conky/sysinfo_popup.sh) Sysinfo ^ca() \
-^fg  ^i(/home/jones/.xmonad/xbm8x8/cpu.xbm) ${execi 60 ~/.xmonad/conky/cpu_bar.sh} \
+^fg  ^i(/uio/hume/student-u56/espenaj/xbm8x8/cpu.xbm) ${execi 60 ~/.xmonad/conky/cpu_bar.sh} \
 ^fg  ^i(/home/jones/.xmonad/xbm8x8/mem.xbm) ${execi 60 ~/.xmonad/conky/mem_bar.sh} \
 ^fg  ^i(/home/jones/.xmonad/xbm8x8/spkr_01.xbm) ${execi 60 ~/.xmonad/conky/vol.sh} \
-^ca(1,~/.xmonad/conky/calendar.sh) ${time %A %d.%m.%y ^i(/home/jones/.xmonad/xbm8x8/clock.xbm) %H:%M}^ca() \
+^ca(1,~/.xmonad/conky/calendar.sh) ${time %A %d.%m.%y ^i(/uio/hume/student-u56/espenaj/.xmonad/xbm8x8/clock.xbm) %H:%M}^ca() \
