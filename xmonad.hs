@@ -37,7 +37,7 @@ import XMonad.Layout.LayoutHints
 import XMonad.Layout.LayoutModifier
 import XMonad.Layout.Grid
 import XMonad.Layout.Gaps
- 
+
 import Data.Ratio ((%))
  
 import qualified XMonad.StackSet as W
@@ -200,6 +200,8 @@ keys' conf@(XConfig {XMonad.modMask = modMask}) = M.fromList $
     , ((modMask,                    xK_t        ), withFocused $ windows . W.sink)     -- Push window back into tiling
     , ((modMask,                    xK_h        ), sendMessage Shrink)                 -- %! Shrink a master area
     , ((modMask,                    xK_l        ), sendMessage Expand)                 -- %! Expand a master area
+    , ((modMask .|. shiftMask,      xK_b        ), sendMessage MirrorExpand)                 -- %! Expand a master area
+    , ((modMask,                    xK_h        ), sendMessage Shrink)                 -- %! Shrink a master area
     , ((modMask,                    xK_comma    ), sendMessage (IncMasterN 1))
     , ((modMask,                    xK_period   ), sendMessage (IncMasterN (-1)))
 
